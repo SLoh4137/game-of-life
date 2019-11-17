@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "game-of-life",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A React implementation of Conway's game of life",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -28,6 +28,7 @@
     "gatsby-plugin-react-helmet": "^3.0.8",
     "gatsby-plugin-resolve-src": "^2.0.0",
     "gatsby-plugin-sass": "^2.0.10",
+    "gatsby-plugin-typescript": "^2.1.18",
     "history": "^4.7.2",
     "node-sass": "^4.11.0",
     "nouislider": "^13.1.1",
@@ -44,6 +45,9 @@
     "typeface-roboto-slab": "0.0.72"
   },
   "devDependencies": {
+    "@types/node": "^12.12.8",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "prettier": "^1.16.4"
   },
   "repository": {

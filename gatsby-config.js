@@ -1,12 +1,12 @@
 module.exports = {
-  pathPrefix: `/mini-gatsbyv2-material-kit-react`,
+  pathPrefix: `/game-of-life`,
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'Game of Life',
   },
   plugins: [
     'gatsby-plugin-resolve-src',
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-offline',
+    'gatsby-plugin-typescript',
     'gatsby-plugin-sass',
     'gatsby-plugin-material-ui',
     {
@@ -21,5 +21,6 @@ module.exports = {
         icon: 'src/assets/img/favicon.png', // This path is relative to the root of the site.
       },
     },
+    'gatsby-plugin-offline',
   ],
 }
