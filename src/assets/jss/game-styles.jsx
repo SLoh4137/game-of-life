@@ -1,0 +1,3 @@
+const aliveStyle = {};
+
+const deadStyle = {};

@@ -1,8 +1,11 @@
 [ignore]
 public/
 static/
+node_modules/
 
 [include]
+src/components/
+src/pages/
 
 [libs]
 
