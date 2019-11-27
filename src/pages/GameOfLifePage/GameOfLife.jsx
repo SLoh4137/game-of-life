@@ -4,7 +4,7 @@
 import React from "react";
 
 import useWindowDimensions from "hooks/useWindowDimensions.jsx";
-import { useUpdateBoard, BOARD_ACTIONS } from "hooks/useUpdateBoard.jsx";
+import { useUniverse, BOARD_ACTIONS } from "hooks/useUniverse.jsx";
 import { CELL_SIZE } from "types/exports";
 
 import Button from "components/CustomButtons/Button.jsx";
@@ -15,7 +15,7 @@ function GameOfLife(props) {
     const numRow = Math.floor(height / CELL_SIZE) - 1;
     const numCol = Math.floor(width / CELL_SIZE) - 1;
 
-    const { count, updateBoardState, updateBoardDispatch } = useUpdateBoard(
+    const { count, updateBoardState, updateBoardDispatch } = useUniverse(
         numRow,
         numCol
     );
