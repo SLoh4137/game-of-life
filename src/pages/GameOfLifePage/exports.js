@@ -11,3 +11,4 @@ export const BOARD_STATE = {
     ODD: 0,
     EVEN: 1,
 }
+

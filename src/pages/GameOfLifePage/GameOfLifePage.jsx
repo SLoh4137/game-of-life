@@ -1,11 +1,14 @@
 /**
  * @flow
  */
-import React, { useReducer } from "react";
+import React, { useState, useReducer } from "react";
 import Board from "./Board";
 import useWindowDimensions from "hooks/useWindowDimensions.jsx";
+import { useUpdateBoard, BOARD_ACTIONS } from "hooks/useUpdateBoard.jsx";
 import { CELL_SIZE, CELL_TYPES, BOARD_STATE } from "./exports";
 import type { BoardType } from "./typeExports";
+
+import Button from "components/CustomButtons/Button.jsx";
 type PropType = {};
 
 type State = {
@@ -16,7 +19,7 @@ type State = {
 function update(
     curState: BoardType,
     nextState: BoardType,
-    cellsToUpdate: Array<number, number>
+    cellsToUpdate: Array<[number, number]>
 ) {}
 
 function reducer(state, action) {
@@ -46,27 +49,45 @@ function createBoard(numRow: number, numCol: number): Board {
 
 function GameOfLifePage(props: PropType) {
     const { width, height } = useWindowDimensions();
-    const numRow = Math.floor(width / CELL_SIZE);
-    const numCol = Math.floor(height / CELL_SIZE);
+    const numRow = Math.floor(height / CELL_SIZE) - 1;
+    const numCol = Math.floor(width / CELL_SIZE) - 1;
 
-    const [state: State, dispatch] = useReducer(reducer, {
-        oddBoard: createBoard(numRow, numCol),
-        evenBoard: createBoard(numRow, numCol),
-        boardState: BOARD_STATE.EVEN,
-    });
-
-    const currentBoard: Board =
-        state.boardState === BOARD_STATE.EVEN
-            ? state.evenBoard
-            : state.oddBoard;
-
-    console.log(numRow);
-    console.log(numCol);
+    const { count, updateBoardState, updateBoardDispatch } = useUpdateBoard(
+        numRow,
+        numCol
+    );
 
     return (
         <div>
-            {/* <h1 align="center">Welcome</h1> */}
-            <Board board={currentBoard}></Board>
+            <h1>{count}</h1>
+            <Button
+                onClick={() => {
+                    updateBoardDispatch({
+                        type: BOARD_ACTIONS.ADD_CELL,
+                        cell: { row: 1, col: 2 },
+                    });
+                }}
+            >
+                ADD
+            </Button>
+            <Button
+                onClick={() => {
+                    updateBoardDispatch({ type: BOARD_ACTIONS.PAUSE });
+                }}
+            >
+                PAUSE
+            </Button>
+            <Button
+                onClick={() => {
+                    updateBoardDispatch({ type: BOARD_ACTIONS.PLAY });
+                }}
+            >
+                START
+            </Button>
+            <Board
+                board={updateBoardState.board}
+                dispatch={updateBoardDispatch}
+            ></Board>
         </div>
     );
 }
