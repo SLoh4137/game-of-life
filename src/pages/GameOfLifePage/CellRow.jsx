@@ -2,7 +2,7 @@
  * @flow
  */
 import React, { useState, useMemo } from "react";
-import type { BoardType, RowType, CellType } from "./typeExports";
+import type { BoardType, RowType, CellType } from "types/typeExports";
 import { BOARD_ACTIONS } from "hooks/useUpdateBoard";
 
 import GridContainer from "components/Grid/GridContainer.jsx";

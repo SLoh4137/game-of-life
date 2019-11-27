@@ -6,14 +6,15 @@ import "assets/scss/material-kit-react.scss?v=1.4.0";
 import 'typeface-roboto';
 import 'typeface-roboto-slab';
 // pages for this product
-import GameOfLifePage from "./GameOfLifePage/GameOfLifePage.jsx";
+import GameOfLife from "./GameOfLifePage/GameOfLife.jsx";
+
 
 let hist = createMemoryHistory();
 
 export default () => (
   <Router history={hist}>
     <Switch>
-      <Route path="/" component={GameOfLifePage} />
+      <Route path="/" component={GameOfLife} />
     </Switch>
   </Router>
 );

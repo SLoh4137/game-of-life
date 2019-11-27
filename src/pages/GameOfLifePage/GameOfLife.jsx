@@ -2,13 +2,15 @@
  * @flow
  */
 import React, { useState, useReducer } from "react";
-import Board from "./Board";
+
 import useWindowDimensions from "hooks/useWindowDimensions.jsx";
 import { useUpdateBoard, BOARD_ACTIONS } from "hooks/useUpdateBoard.jsx";
-import { CELL_SIZE, CELL_TYPES, BOARD_STATE } from "./exports";
-import type { BoardType } from "./typeExports";
+import { CELL_SIZE, CELL_TYPES, BOARD_STATE } from "types/exports";
+import type { BoardType } from "types/typeExports";
 
 import Button from "components/CustomButtons/Button.jsx";
+import Board from "./Board";
+
 type PropType = {};
 
 type State = {
@@ -47,7 +49,7 @@ function createBoard(numRow: number, numCol: number): Board {
     return board;
 }
 
-function GameOfLifePage(props: PropType) {
+function GameOfLife(props) {
     const { width, height } = useWindowDimensions();
     const numRow = Math.floor(height / CELL_SIZE) - 1;
     const numCol = Math.floor(width / CELL_SIZE) - 1;
@@ -92,4 +94,4 @@ function GameOfLifePage(props: PropType) {
     );
 }
 
-export default GameOfLifePage;
+export default GameOfLife;

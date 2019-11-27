@@ -6,11 +6,11 @@ import {
     CELL_SIZE,
     CELL_TYPES,
     BOARD_STATE,
-} from "pages/GameOfLifePage/exports";
+} from "types/exports";
 import type {
     BoardType,
     BoardActionsState,
-} from "pages/GameOfLifePage/typeExports";
+} from "types/typeExports";
 
 function initial() {
     // Idea is to populate the initial update list and then from then on use update to update

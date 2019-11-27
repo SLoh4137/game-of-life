@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { CELL_SIZE, CELL_TYPES } from "./exports.js";
+import { CELL_SIZE, CELL_TYPES } from "types/exports";
 
 type PropType = {
     state: CELL_TYPES,
