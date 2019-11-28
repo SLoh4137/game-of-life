@@ -182,11 +182,11 @@ function createUniverse(numRow, numCol, liveSet) {
     return newUniverse;
 }
 
-function initialize({ numRow, numCol }) {
+function initialize({ numRow, numCol, spawnRate }) {
     const liveSet = new Set();
     for (let row = 0; row < numRow; row++) {
         for (let col = 0; col < numCol; col++) {
-            if (Math.random() < 0) {
+            if (Math.random() < spawnRate) {
                 const keyString = convertToKey(row, col);
                 liveSet.add(keyString);
             }
@@ -229,10 +229,10 @@ function reducer(state, action) {
     };
 }
 
-export function useUniverse(numRow: number, numCol: number) {
+export function useUniverse(numRow: number, numCol: number, spawnRate: number) {
     const [state, dispatch] = useReducer(
         reducer,
-        { numRow, numCol },
+        { numRow, numCol, spawnRate },
         initialize
     );
     const [isPaused, setIsPaused] = useState(true);

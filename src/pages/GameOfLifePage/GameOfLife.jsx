@@ -18,7 +18,8 @@ function GameOfLife(props) {
 
     const { setIsPaused, state, dispatch, count } = useUniverse(
         numRow,
-        numCol
+        numCol,
+        0.3,
     );
 
     return (
