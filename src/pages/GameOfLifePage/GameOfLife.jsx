@@ -17,7 +17,7 @@ function GameOfLife(props) {
     const numRow = Math.floor(height / CELL_SIZE) - 2;
     const numCol = Math.floor(width / CELL_SIZE);
 
-    const { setIsPaused, universe, flipCell, count } = useUniverse(
+    const { setIsPaused, state, dispatch, count } = useUniverse(
         numRow,
         numCol
     );
@@ -30,7 +30,7 @@ function GameOfLife(props) {
                 <Button onClick={() => setIsPaused(false)}>START</Button>
             </GridContainer>
             
-            <Board universe={universe} flipCell={flipCell}></Board>
+            <Board universe={state.universe} dispatch={dispatch}></Board>
         </GridContainer>
     );
 }

@@ -2,7 +2,7 @@
  * @flow
  */
 import { useState, useEffect, useReducer } from "react";
-import { CELL_TYPES, BOARD_STATE } from "types/exports";
+import { CELL_TYPES } from "types/exports";
 import type { BoardType } from "types/typeExports";
 
 type LiveList = Map<String, Position>;
@@ -13,10 +13,6 @@ type Position = {
 };
 
 const DELIMETER = ",";
-
-function flip(state: CELL_TYPES) {
-    return state === CELL_TYPES.ALIVE ? CELL_TYPES.DEAD : CELL_TYPES.ALIVE;
-}
 
 function convertToKey(row: number, col: number): String {
     return row + DELIMETER + col;
@@ -150,19 +146,6 @@ function checkAllNeighbors(
     return numAliveNeighbors;
 }
 
-function initializeSet(numRow, numCol) {
-    const liveSet = new Set();
-    for (let row = 0; row < numRow; row++) {
-        for(let col = 0; col < numCol; col++) {
-            if(Math.random() < 0.3) {
-                const keyString = convertToKey(row, col);
-                liveSet.add(keyString);
-            }
-        }
-    } 
-    return liveSet;
-}
-
 function createUniverse(numRow, numCol, liveSet) {
     const newUniverse = [];
     for (let row = 0; row < numRow; row++) {
@@ -180,22 +163,59 @@ function createUniverse(numRow, numCol, liveSet) {
     return newUniverse;
 }
 
+function initialize({ numRow, numCol }) {
+    const liveSet = new Set();
+    for (let row = 0; row < numRow; row++) {
+        for (let col = 0; col < numCol; col++) {
+            if (Math.random() < 0.3) {
+                const keyString = convertToKey(row, col);
+                liveSet.add(keyString);
+            }
+        }
+    }
+    const universe = createUniverse(numRow, numCol, liveSet);
+    return { liveSet: liveSet, universe: universe };
+}
+
+export const ACTIONS = {
+    LIVE_SET: 0,
+    FLIP: 1,
+};
+
+function reducer(state, action) {
+    let { liveSet, universe } = state;
+    switch (action.type) {
+        case ACTIONS.LIVE_SET:
+            liveSet = action.liveSet;
+            break;
+        case ACTIONS.FLIP:
+            const { row, col } = action;
+            const keyString = convertToKey(row, col);
+            if (isCellAlive(keyString, state.liveSet)) {
+                liveSet.delete();
+            } else {
+                liveSet.add(keyString);
+            }
+            break;
+    }
+
+    const numRow = universe.length;
+    const numCol = universe[0].length;
+
+    return {
+        liveSet: liveSet,
+        universe: createUniverse(numRow, numCol, liveSet),
+    };
+}
+
 export function useUniverse(numRow: number, numCol: number) {
-    const [liveSet, setLiveSet] = useState(initializeSet(numRow, numCol));
-    const [universe, setUniverse] = useState(
-        createUniverse(numRow, numCol, liveSet)
+    const [state, dispatch] = useReducer(
+        reducer,
+        { numRow, numCol },
+        initialize
     );
     const [isPaused, setIsPaused] = useState(true);
     const [count, setCount] = useState(0);
-    const [flipCell, setFlipCell] = useState((row, col) => {
-        const keyString = convertToKey(row, col);
-        if (isCellAlive(keyString, liveSet)) {
-            liveSet.delete();
-        } else {
-            liveSet.add(keyString);
-        }
-        setLiveSet(liveSet);
-    });
 
     const getNeighborPositions = (row: number, col: number) => {
         const left = col - 1 >= 0 ? col - 1 : numCol - 1;
@@ -213,10 +233,10 @@ export function useUniverse(numRow: number, numCol: number) {
             const newLiveSet = new Set();
             const checkSet = new Set();
 
-            liveSet.forEach(keyString => {
+            state.liveSet.forEach(keyString => {
                 const numAliveNeighbors = checkAllNeighbors(
                     keyString,
-                    liveSet,
+                    state.liveSet,
                     checkSet,
                     getNeighborPositions
                 );
@@ -228,7 +248,7 @@ export function useUniverse(numRow: number, numCol: number) {
             checkSet.forEach(keyString => {
                 const numAliveNeighbors = checkAllNeighbors(
                     keyString,
-                    liveSet,
+                    state.liveSet,
                     null,
                     getNeighborPositions
                 );
@@ -237,28 +257,17 @@ export function useUniverse(numRow: number, numCol: number) {
                 }
             });
 
-            setUniverse(createUniverse(numRow, numCol, newLiveSet));
-            setLiveSet(newLiveSet);
+            dispatch({ type: ACTIONS.LIVE_SET, liveSet: newLiveSet });
             setCount(count => count + 1);
-            setFlipCell((row, col) => {
-                const keyString = convertToKey(row, col);
-                if (isCellAlive(keyString, newLiveSet)) {
-                    newLiveSet.delete();
-                } else {
-                    newLiveSet.add(keyString);
-                }
-                setLiveSet(newLiveSet);
-            });
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [isPaused, liveSet, numRow, numCol, getNeighborPositions]);
+    }, [isPaused, state.liveSet, numRow, numCol, getNeighborPositions]);
 
-    console.log(flipCell);
     return {
         setIsPaused: setIsPaused,
-        universe: universe,
-        flipCell: flipCell,
         count: count,
+        state: state,
+        dispatch: dispatch,
     };
 }

@@ -10,11 +10,11 @@ import CellRow from "./CellRow";
 
 type PropType = {
     universe: UniverseType,
-    flipCell: FlipCellFunc,
+    dispatch: Object,
 };
 
 function Board(props: PropType) {
-    const { universe, flipCell } = props;
+    const { universe, dispatch } = props;
     const displayBoard = [];
     let rowNum = 0;
 
@@ -23,7 +23,7 @@ function Board(props: PropType) {
             <CellRow
                 row={universe[rowNum]}
                 rowNum={rowNum}
-                flipCell={flipCell}
+                dispatch={dispatch}
             />
         );
     }
