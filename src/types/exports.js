@@ -1,4 +1,4 @@
-export const CELL_SIZE = 100;
+export const CELL_SIZE = 50;
 
 export const CELL_TYPES = {
     DEAD: false,
