@@ -2,29 +2,37 @@
  * @flow
  */
 import React, { useMemo } from "react";
-import type { BoardType, RowType, CellType } from "types/typeExports";
+import type { UniverseType, FlipCellFunc } from "types/typeExports";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CellRow from "./CellRow";
 
 type PropType = {
-    board: BoardType,
-    dispatch: Object,
+    universe: UniverseType,
+    flipCell: FlipCellFunc,
 };
 
 function Board(props: PropType) {
-    const { board, dispatch } = props;
+    const { universe, flipCell } = props;
     const displayBoard = [];
     let rowNum = 0;
 
-    for (rowNum = 0; rowNum < board.length; rowNum += 1) {
+    for (rowNum = 0; rowNum < universe.length; rowNum += 1) {
         displayBoard.push(
-            <CellRow row={board[rowNum]} rowNum={rowNum} dispatch={dispatch} />
+            <CellRow
+                row={universe[rowNum]}
+                rowNum={rowNum}
+                flipCell={flipCell}
+            />
         );
     }
 
-    return <GridContainer direction="column">{displayBoard}</GridContainer>;
+    return (
+        <GridContainer direction="column" justify="center" alignItems="center">
+            {displayBoard}
+        </GridContainer>
+    );
 }
 
 export default Board;

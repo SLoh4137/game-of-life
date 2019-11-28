@@ -1,5 +1,3 @@
-import type { CellType } from "./typeExports.js";
-
 export const CELL_SIZE = 100;
 
 export const CELL_TYPES = {
