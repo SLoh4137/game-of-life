@@ -8,7 +8,6 @@ import { useUniverse } from "hooks/useUniverse.jsx";
 import { CELL_SIZE } from "types/exports";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Board from "./Board";
 

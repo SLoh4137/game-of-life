@@ -1,13 +1,12 @@
 /**
  * @flow
  */
-import React, { useState, useMemo } from "react";
-import type { RowType, CellType, FlipCellFunc } from "types/typeExports";
+import React from "react";
+import type { RowType } from "types/typeExports";
 
 import { ACTIONS } from "hooks/useUniverse.jsx";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import Cell from "./Cell";
 
 type PropType = {

@@ -3,10 +3,8 @@
  */
 import { useState, useEffect, useReducer } from "react";
 import { CELL_TYPES } from "types/exports";
-import type { BoardType } from "types/typeExports";
 
-type LiveList = Map<String, Position>;
-type CellAliveFunc = Position => Boolean;
+type LiveSet = Set<String>;
 type Position = {
     row: number,
     col: number,
@@ -27,6 +25,20 @@ function isCellAlive(keyString: string, liveSet: Set<String>): Boolean {
     return liveSet.has(keyString);
 }
 
+function getNeighborPositions(
+    row: number,
+    col: number,
+    numRow: number,
+    numCol: number
+) {
+    const left = col - 1 >= 0 ? col - 1 : numCol - 1;
+    const right = col + 1 < numCol ? col + 1 : 0;
+    const top = row - 1 >= 0 ? row - 1 : numRow - 1;
+    const bottom = row + 1 < numRow ? row + 1 : 0;
+
+    return { left, right, top, bottom };
+}
+
 /**
  * Checks to see if the passed in neighbor is alive
  * If so, returns numAliveNeighbors + 1
@@ -40,8 +52,8 @@ function isCellAlive(keyString: string, liveSet: Set<String>): Boolean {
 function checkNeighbor(
     neighborString: String,
     numAliveNeighbors: number,
-    liveSet: Set,
-    checkSet: Set
+    liveSet: LiveSet,
+    checkSet: LiveSet
 ): number {
     if (isCellAlive(neighborString, liveSet)) {
         return numAliveNeighbors + 1;
@@ -56,16 +68,23 @@ function checkNeighbor(
  * @param {*} keyString
  * @param {*} liveSet
  * @param {*} checkSet
- * @param {*} getNeighborPositions
+ * @param {*} numRow
+ * @param {*} numCol
  */
 function checkAllNeighbors(
     keyString: String,
-    liveSet: Set,
-    checkSet: Set,
-    getNeighborPositions
+    liveSet: LiveSet,
+    checkSet: LiveSet,
+    numRow: number,
+    numCol: number
 ): number {
     const { row, col } = convertToPosition(keyString);
-    const { left, right, top, bottom } = getNeighborPositions(row, col);
+    const { left, right, top, bottom } = getNeighborPositions(
+        row,
+        col,
+        numRow,
+        numCol
+    );
     // left, right correspond to col
     // top, bottom correspond to row
 
@@ -167,7 +186,7 @@ function initialize({ numRow, numCol }) {
     const liveSet = new Set();
     for (let row = 0; row < numRow; row++) {
         for (let col = 0; col < numCol; col++) {
-            if (Math.random() < 0.3) {
+            if (Math.random() < 0) {
                 const keyString = convertToKey(row, col);
                 liveSet.add(keyString);
             }
@@ -197,6 +216,8 @@ function reducer(state, action) {
                 liveSet.add(keyString);
             }
             break;
+        default:
+            throw new Error("Invalid action provided");
     }
 
     const numRow = universe.length;
@@ -217,15 +238,6 @@ export function useUniverse(numRow: number, numCol: number) {
     const [isPaused, setIsPaused] = useState(true);
     const [count, setCount] = useState(0);
 
-    const getNeighborPositions = (row: number, col: number) => {
-        const left = col - 1 >= 0 ? col - 1 : numCol - 1;
-        const right = col + 1 < col ? numCol + 1 : 0;
-        const top = row - 1 >= 0 ? row - 1 : numRow - 1;
-        const bottom = row + 1 < row ? numRow + 1 : 0;
-
-        return { left, right, top, bottom };
-    };
-
     useEffect(() => {
         const interval = setInterval(() => {
             if (isPaused) return;
@@ -238,9 +250,10 @@ export function useUniverse(numRow: number, numCol: number) {
                     keyString,
                     state.liveSet,
                     checkSet,
-                    getNeighborPositions
+                    numRow,
+                    numCol
                 );
-                if (numAliveNeighbors == 2 || numAliveNeighbors == 3) {
+                if (numAliveNeighbors === 2 || numAliveNeighbors === 3) {
                     newLiveSet.add(keyString);
                 }
             });
@@ -250,9 +263,10 @@ export function useUniverse(numRow: number, numCol: number) {
                     keyString,
                     state.liveSet,
                     null,
-                    getNeighborPositions
+                    numRow,
+                    numCol
                 );
-                if (numAliveNeighbors == 3) {
+                if (numAliveNeighbors === 3) {
                     newLiveSet.add(keyString);
                 }
             });
@@ -262,7 +276,7 @@ export function useUniverse(numRow: number, numCol: number) {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [isPaused, state.liveSet, numRow, numCol, getNeighborPositions]);
+    }, [isPaused, state.liveSet, numRow, numCol]);
 
     return {
         setIsPaused: setIsPaused,

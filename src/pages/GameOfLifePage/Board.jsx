@@ -1,11 +1,10 @@
 /**
  * @flow
  */
-import React, { useMemo } from "react";
-import type { UniverseType, FlipCellFunc } from "types/typeExports";
+import React from "react";
+import type { UniverseType } from "types/typeExports";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import CellRow from "./CellRow";
 
 type PropType = {
@@ -21,6 +20,7 @@ function Board(props: PropType) {
     for (rowNum = 0; rowNum < universe.length; rowNum += 1) {
         displayBoard.push(
             <CellRow
+                key={rowNum}
                 row={universe[rowNum]}
                 rowNum={rowNum}
                 dispatch={dispatch}
