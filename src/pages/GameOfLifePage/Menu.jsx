@@ -2,6 +2,13 @@ import React, { useState } from "react";
 
 import { Button, SwipeableDrawer } from "@material-ui/core";
 
+const menuStyle = {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    opacity: 0.7,
+};
+
 function Menu(props) {
     const { children } = props;
     const [isOpen, setOpen] = useState(false);
@@ -20,7 +27,13 @@ function Menu(props) {
 
     return (
         <>
-            <Button onClick={toggleDrawer(true)}>Open Menu</Button>
+            <Button
+                color="primary"
+                style={menuStyle}
+                onClick={toggleDrawer(true)}
+            >
+                Open Menu
+            </Button>
             <SwipeableDrawer
                 anchor="bottom"
                 open={isOpen}

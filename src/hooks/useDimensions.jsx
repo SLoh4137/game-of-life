@@ -6,11 +6,11 @@
 import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
+    console.log(window);
     if (typeof window !== "undefined") {
-        const { innerWidth: width, innerHeight: height } = window;
         return {
-            width,
-            height,
+            width: window.innerWidth,
+            height: window.innerHeight
         };
     } else {
         return {
@@ -20,8 +20,8 @@ function getWindowDimensions() {
     }
 }
 
-function convert(cellSize, spacing) {
-    const { width, height } = getWindowDimensions();
+function convert(cellSize, spacing, ref) {
+    const { width, height } = getWindowDimensions(ref);
     const size = cellSize + spacing * 2;
     const numRow = Math.floor(height / size);
     const numCol = Math.floor(width / size);
