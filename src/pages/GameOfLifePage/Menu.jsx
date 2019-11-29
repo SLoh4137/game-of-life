@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Button, SwipeableDrawer } from "@material-ui/core";
+import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
 
 const menuStyle = {
     position: "absolute",
@@ -40,7 +40,9 @@ function Menu(props) {
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
             >
-                {children}
+                <Grid container direction="column" justify="center" alignContent="center">
+                    {children}
+                </Grid>
             </SwipeableDrawer>
         </>
     );

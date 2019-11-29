@@ -39,8 +39,10 @@ function GameOfLife(props) {
         <div className={classes.root}>
             <Menu>
                 <h1 align="center">{count}</h1>
-                <Button onClick={() => setIsPaused(true)}>PAUSE</Button>
-                <Button onClick={() => setIsPaused(false)}>START</Button>
+                <PlayPauseButton
+                    isPaused={isPaused}
+                    setIsPaused={setIsPaused}
+                />
             </Menu>
 
             <Board universe={state.universe} dispatch={dispatch} />
