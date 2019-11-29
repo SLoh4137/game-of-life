@@ -1,3 +1,0 @@
-const aliveStyle = {};
-
-const deadStyle = {};
