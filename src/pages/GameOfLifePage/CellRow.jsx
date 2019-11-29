@@ -18,7 +18,8 @@ type PropType = {
 function CellRow(props: PropType) {
     const { row, rowNum, dispatch } = props;
     const displayRow = [];
-    for (let colNum = 0; colNum < row.length; colNum++) {
+    const rowLength = row ? row.length : 0;
+    for (let colNum = 0; colNum < rowLength; colNum++) {
         displayRow.push(
             <Cell
                 key={[rowNum, colNum]}

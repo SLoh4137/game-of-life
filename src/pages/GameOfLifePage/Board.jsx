@@ -15,9 +15,10 @@ type PropType = {
 function Board(props: PropType) {
     const { universe, dispatch } = props;
     const displayBoard = [];
+    const universeLength = universe ? universe.length : 0;
     let rowNum = 0;
 
-    for (rowNum = 0; rowNum < universe.length; rowNum += 1) {
+    for (rowNum = 0; rowNum < universeLength; rowNum += 1) {
         displayBoard.push(
             <CellRow
                 key={rowNum}
