@@ -279,6 +279,7 @@ export function useUniverse(numRow: number, numCol: number, spawnRate: number) {
     }, [isPaused, state.liveSet, numRow, numCol]);
 
     return {
+        isPaused: isPaused,
         setIsPaused: setIsPaused,
         count: count,
         state: state,
