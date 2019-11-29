@@ -3,9 +3,8 @@
  */
 import React from "react";
 
-import useWindowDimensions from "hooks/useWindowDimensions.jsx";
+import useDimensions from "hooks/useDimensions.jsx";
 import { useUniverse } from "hooks/useUniverse.jsx";
-import { CELL_SIZE } from "types/exports";
 
 import Fab from "@material-ui/core/Fab";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -15,13 +14,9 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Menu from "./Menu";
 import Board from "./Board";
-import { GridList } from "@material-ui/core";
 
 function GameOfLife(props) {
-    const { width, height } = useWindowDimensions();
-    const numRow = Math.floor(height / CELL_SIZE) - 2;
-    const numCol = Math.floor(width / CELL_SIZE);
-
+    const { numRow, numCol } = useDimensions(50, 0, false);
     const { isPaused, setIsPaused, state, dispatch, count } = useUniverse(
         numRow,
         numCol,
