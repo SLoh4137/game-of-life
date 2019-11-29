@@ -9,11 +9,11 @@ import CellRow from "./CellRow";
 
 type PropType = {
     universe: UniverseType,
-    dispatch: Object,
+    universeDispatch: Object,
 };
 
 function Board(props: PropType) {
-    const { universe, dispatch } = props;
+    const { universe, universeDispatch } = props;
     const displayBoard = [];
     const universeLength = universe ? universe.length : 0;
     let rowNum = 0;
@@ -24,7 +24,7 @@ function Board(props: PropType) {
                 key={rowNum}
                 row={universe[rowNum]}
                 rowNum={rowNum}
-                dispatch={dispatch}
+                universeDispatch={universeDispatch}
             />
         );
     }

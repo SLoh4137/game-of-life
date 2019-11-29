@@ -45,7 +45,7 @@ function GameOfLife(props) {
                 />
             </Menu>
 
-            <Board universe={state.universe} dispatch={dispatch} />
+            <Board universe={state.universe} universeDispatch={dispatch} />
 
             <PlayPauseButton
                 className={classes.playPauseButton}

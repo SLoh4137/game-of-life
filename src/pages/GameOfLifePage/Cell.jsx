@@ -3,15 +3,19 @@
  */
 
 import React from "react";
+
+import { ACTIONS } from "hooks/useUniverse.jsx";
 import { CELL_SIZE, CELL_TYPES } from "types/exports";
 
 type PropType = {
+    row: Number,
+    col: Number,
     state: CELL_TYPES,
-    onClick: Object,
+    universeDispatch: Object,
 };
 
 function Cell(props: PropType) {
-    const { state, onClick } = props;
+    const { row, col, state, universeDispatch } = props;
     const style = {
         width: CELL_SIZE,
         height: CELL_SIZE,
@@ -22,7 +26,11 @@ function Cell(props: PropType) {
     return (
         <button
             style={style}
-            onClick={onClick}
+            onClick={() => universeDispatch({
+                        type: ACTIONS.FLIP,
+                        row: row,
+                        col: col,
+                    })}
         ></button>
     );
 }
