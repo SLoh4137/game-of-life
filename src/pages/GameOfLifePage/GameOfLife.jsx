@@ -44,6 +44,8 @@ export const ACTIONS = {
     SET_CELL_SIZE: 1,
     SET_SPAWN_RATE: 2,
     RESET: 3,
+    SET_ALIVE_COLOR: 4,
+    SET_DEAD_COLOR: 5,
 };
 
 function reducer(state: State, action) {
@@ -64,6 +66,16 @@ function reducer(state: State, action) {
             break;
         case ACTIONS.RESET:
             return init();
+        case ACTIONS.SET_ALIVE_COLOR:
+            if (action.aliveColor === undefined)
+                throw new Error("Alive color not provided");
+            aliveColor = action.aliveColor;
+            break;
+        case ACTIONS.SET_DEAD_COLOR:
+            if (action.deadColor === undefined)
+                throw new Error("Dead color not provided");
+            deadColor = action.deadColor;
+            break;
         default:
             throw new Error("Invalid action type");
     }
@@ -82,8 +94,8 @@ function init() {
         isPaused: false,
         cellSize: 50,
         initialSpawnRate: 0.3,
-        aliveColor: "black",
-        deadColor: "white",
+        aliveColor: "#000000",
+        deadColor: "#ffffff",
     };
 }
 
@@ -101,13 +113,13 @@ function GameOfLife(props) {
 
     return (
         <div className={classes.root}>
-            <Menu className={classes.menu}>
-                <h3>Generation: {generation}</h3>
-                <PlayPauseButton
-                    isPaused={state.isPaused}
-                    dispatch={dispatch}
-                />
-            </Menu>
+            <Menu
+                className={classes.menu}
+                generation={generation}
+                optionsState={state}
+                optionsDispatch={dispatch}
+                universeDispatch={universeDispatch}
+            />
             <ThemeProvider theme={state}>
                 <Board
                     classes={classes}
@@ -115,7 +127,6 @@ function GameOfLife(props) {
                     universeDispatch={universeDispatch}
                 />
             </ThemeProvider>
-
             <PlayPauseButton
                 className={classes.playPauseButton}
                 isPaused={state.isPaused}

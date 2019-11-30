@@ -1,9 +1,27 @@
 import React, { useState } from "react";
 
-import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
+import { ACTIONS } from "./GameOfLife";
 
-function Menu(props) {
-    const { className, children } = props;
+import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
+import PlayPauseButton from "./PlayPauseButton";
+import ChooseColorInput from "./ChooseColorInput";
+
+type Props = {
+    className: String,
+    generation: number,
+    optionsState: Object,
+    optionsDispatch: Object,
+    universeDispatch: Object,
+};
+
+function Menu(props: Props) {
+    const {
+        className,
+        generation,
+        optionsState,
+        optionsDispatch,
+        universeDispatch,
+    } = props;
     const [isOpen, setOpen] = useState(false);
 
     const toggleDrawer = open => event => {
@@ -39,7 +57,31 @@ function Menu(props) {
                     justify="center"
                     alignItems="center"
                 >
-                    {children}
+                    <h3>Generation: {generation}</h3>
+                    <PlayPauseButton
+                        isPaused={optionsState.isPaused}
+                        dispatch={optionsDispatch}
+                    />
+                    <Grid container justify="center" alignItems="center">
+                        <Grid item xs={12} lg={4}>
+                            <ChooseColorInput
+                                label="Alive Cells Color: "
+                                option="aliveColor"
+                                actionType={ACTIONS.SET_ALIVE_COLOR}
+                                defaultValue={optionsState.aliveColor}
+                                dispatch={optionsDispatch}
+                            />
+                        </Grid>
+                        <Grid item xs={12} lg={4}>
+                            <ChooseColorInput
+                                label="Dead Cells Color: "
+                                option="deadColor"
+                                actionType={ACTIONS.SET_DEAD_COLOR}
+                                defaultValue={optionsState.deadColor}
+                                dispatch={optionsDispatch}
+                            />
+                        </Grid>
+                    </Grid>
                 </Grid>
             </SwipeableDrawer>
         </>
