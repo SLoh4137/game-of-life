@@ -26,20 +26,20 @@ workbox.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-38fe0913f1a153a65060.js"
+    "url": "webpack-runtime-6214b9015d574dff3c3c.js"
   },
   {
-    "url": "commons-0e8c48515ea2cb7bd8b7.js"
+    "url": "commons-3871085cc89513e37070.js"
   },
   {
-    "url": "app-2e77c2907c66733af519.js"
+    "url": "app-19322fc0a66334cc3614.js"
   },
   {
-    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-464799f49a8645ba6a44.js"
+    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-f8c20c8491cbd22ce357.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "b5fc9da42a31b4409f4c89245ea4bfcd"
+    "revision": "f5ebc5cf2d1892060340df20b4a9e5e3"
   },
   {
     "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
@@ -71,7 +71,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/game-of-life/app-2e77c2907c66733af519.js`))) {
+  if (!resources || !(await caches.match(`/game-of-life/app-19322fc0a66334cc3614.js`))) {
     return await fetch(event.request)
   }
 
