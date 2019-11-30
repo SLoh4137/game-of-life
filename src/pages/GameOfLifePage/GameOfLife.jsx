@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 
@@ -23,37 +23,92 @@ const useStyles = makeStyles({
         left: 10,
         opacity: 0.9,
     },
+    menu: {
+        position: "absolute",
+        top: 10,
+        right: 10,
+        opacity: 0.7,
+    },
 });
 
-function GameOfLife(props) {
-    const [isPaused, setIsPaused] = useState(false);
-    const [cellSize, setCellSize] = useState(50);
-    const classes = useStyles({ cellSize: cellSize });
-    const { numRow, numCol } = useDimensions(50, 0, false);
+type State = {
+    isPaused: boolean,
+    cellSize: number,
+    initialSpawnRate: number,
+    aliveColor: String,
+    deadColor: String,
+};
 
-    const {universeState, universeDispatch, generation } = useUniverse(
-        numRow,
-        numCol,
-        0.3,
+export const ACTIONS = {
+    PLAYPAUSE: 0,
+    SET_CELL_SIZE: 1,
+    SET_SPAWN_RATE: 2,
+    RESET: 3,
+};
+
+function reducer(state: State, action) {
+    let { isPaused, cellSize, initialSpawnRate, aliveColor, deadColor } = state;
+    switch (action.type) {
+        case ACTIONS.PLAYPAUSE:
+            isPaused = !isPaused;
+            break;
+        case ACTIONS.SET_CELL_SIZE:
+            if (action.cellSize === undefined)
+                throw new Error("Cell size not provided");
+            cellSize = action.cellSize;
+            break;
+        case ACTIONS.SET_SPAWN_RATE:
+            if (action.initialSpawnRate === undefined)
+                throw new Error("Initial spawn rate not provided");
+            initialSpawnRate = action.initialSpawnRate;
+            break;
+        case ACTIONS.RESET:
+            return init();
+        default:
+            throw new Error("Invalid action type");
+    }
+
+    return {
         isPaused,
-    );
+        cellSize,
+        initialSpawnRate,
+        aliveColor,
+        deadColor,
+    };
+}
 
-    const theme = {
-        cellSize: cellSize,
+function init() {
+    return {
+        isPaused: false,
+        cellSize: 50,
+        initialSpawnRate: 0.3,
         aliveColor: "black",
         deadColor: "white",
     };
+}
+
+function GameOfLife(props) {
+    const [state, dispatch] = useReducer(reducer, init());
+    const classes = useStyles();
+    const { numRow, numCol } = useDimensions(50, 0, false);
+
+    const { universeState, universeDispatch, generation } = useUniverse(
+        numRow,
+        numCol,
+        state.initialSpawnRate,
+        state.isPaused
+    );
 
     return (
         <div className={classes.root}>
-            <Menu>
-                <h3 align="center">Generation: {generation}</h3>
+            <Menu className={classes.menu}>
+                <h3>Generation: {generation}</h3>
                 <PlayPauseButton
-                    isPaused={isPaused}
-                    setIsPaused={setIsPaused}
+                    isPaused={state.isPaused}
+                    dispatch={dispatch}
                 />
             </Menu>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={state}>
                 <Board
                     classes={classes}
                     universe={universeState.universe}
@@ -63,8 +118,8 @@ function GameOfLife(props) {
 
             <PlayPauseButton
                 className={classes.playPauseButton}
-                isPaused={isPaused}
-                setIsPaused={setIsPaused}
+                isPaused={state.isPaused}
+                dispatch={dispatch}
             />
         </div>
     );

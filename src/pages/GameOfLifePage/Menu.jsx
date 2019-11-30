@@ -2,15 +2,8 @@ import React, { useState } from "react";
 
 import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
 
-const menuStyle = {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    opacity: 0.7,
-};
-
 function Menu(props) {
-    const { children } = props;
+    const { className, children } = props;
     const [isOpen, setOpen] = useState(false);
 
     const toggleDrawer = open => event => {
@@ -29,7 +22,7 @@ function Menu(props) {
         <>
             <Button
                 color="primary"
-                style={menuStyle}
+                className={className}
                 onClick={toggleDrawer(true)}
             >
                 Open Menu
@@ -40,7 +33,12 @@ function Menu(props) {
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
             >
-                <Grid container direction="column" justify="center" alignContent="center">
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                >
                     {children}
                 </Grid>
             </SwipeableDrawer>

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { ACTIONS } from "./GameOfLife";
+
 import Fab from "@material-ui/core/Fab";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
@@ -7,16 +9,16 @@ import PauseIcon from "@material-ui/icons/Pause";
 type Props = {
     className: String,
     isPaused: Boolean,
-    setIsPaused: Function,
+    dispatch: Object,
 };
 
 function PlayPauseButton(props: Props) {
-    const { className, isPaused, setIsPaused } = props;
+    const { className, isPaused, dispatch } = props;
     return (
         <Fab
             className={className}
             size="small"
-            onClick={() => setIsPaused(!isPaused)}
+            onClick={() => dispatch({type: ACTIONS.PLAYPAUSE})}
         >
             {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
         </Fab>
