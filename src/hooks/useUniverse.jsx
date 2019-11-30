@@ -229,14 +229,13 @@ function reducer(state, action) {
     };
 }
 
-export function useUniverse(numRow: number, numCol: number, spawnRate: number) {
+export function useUniverse(numRow: number, numCol: number, spawnRate: number, isPaused) {
     const [state, dispatch] = useReducer(
         reducer,
         { numRow, numCol, spawnRate },
         initialize
     );
-    const [isPaused, setIsPaused] = useState(true);
-    const [count, setCount] = useState(0);
+    const [generation, setGeneration] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -272,17 +271,15 @@ export function useUniverse(numRow: number, numCol: number, spawnRate: number) {
             });
 
             dispatch({ type: ACTIONS.LIVE_SET, liveSet: newLiveSet });
-            setCount(count => count + 1);
+            setGeneration(generation => generation + 1);
         }, 1000);
 
         return () => clearInterval(interval);
     }, [isPaused, state.liveSet, numRow, numCol]);
 
     return {
-        isPaused: isPaused,
-        setIsPaused: setIsPaused,
-        count: count,
-        state: state,
-        dispatch: dispatch,
+        generation: generation,
+        universeState: state,
+        universeDispatch: dispatch,
     };
 }

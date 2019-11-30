@@ -26,13 +26,16 @@ const useStyles = makeStyles({
 });
 
 function GameOfLife(props) {
+    const [isPaused, setIsPaused] = useState(false);
     const [cellSize, setCellSize] = useState(50);
     const classes = useStyles({ cellSize: cellSize });
     const { numRow, numCol } = useDimensions(50, 0, false);
-    const { isPaused, setIsPaused, state, dispatch, count } = useUniverse(
+
+    const {universeState, universeDispatch, generation } = useUniverse(
         numRow,
         numCol,
-        0.3
+        0.3,
+        isPaused,
     );
 
     const theme = {
@@ -44,7 +47,7 @@ function GameOfLife(props) {
     return (
         <div className={classes.root}>
             <Menu>
-                <h1 align="center">{count}</h1>
+                <h3 align="center">Generation: {generation}</h3>
                 <PlayPauseButton
                     isPaused={isPaused}
                     setIsPaused={setIsPaused}
@@ -53,8 +56,8 @@ function GameOfLife(props) {
             <ThemeProvider theme={theme}>
                 <Board
                     classes={classes}
-                    universe={state.universe}
-                    universeDispatch={dispatch}
+                    universe={universeState.universe}
+                    universeDispatch={universeDispatch}
                 />
             </ThemeProvider>
 
