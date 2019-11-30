@@ -3,7 +3,7 @@
  */
 import React, { useReducer } from "react";
 
-import { makeStyles, ThemeProvider } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 
 import { Grid } from "@material-ui/core";
 
@@ -157,13 +157,13 @@ function GameOfLife(props) {
                     </Grid>
                 </Grid>
             </Menu>
-            {/* <ThemeProvider theme={theme}> */}
-                <Board
-                    classes={classes}
-                    universe={universeState.universe}
-                    universeDispatch={universeDispatch}
-                />
-            {/* </ThemeProvider> */}
+            =
+            <Board
+                classes={classes}
+                universe={universeState.universe}
+                universeDispatch={universeDispatch}
+            />
+            =
             <PlayPauseButton
                 className={classes.playPauseButton}
                 isPaused={optionsState.isPaused}
