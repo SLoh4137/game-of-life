@@ -10,9 +10,6 @@ import CellRow from "./CellRow";
 type PropType = {
     universe: UniverseType,
     universeDispatch: Object,
-    cellSize: Number,
-    aliveColor: String,
-    deadColor: String,
 };
 
 

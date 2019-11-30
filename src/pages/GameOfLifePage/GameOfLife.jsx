@@ -3,17 +3,19 @@
  */
 import React, { useReducer } from "react";
 
-import { makeStyles, ThemeProvider } from "@material-ui/styles";
+import { withStyles, ThemeProvider } from "@material-ui/styles";
+
+import { Grid } from "@material-ui/core";
 
 import useDimensions from "hooks/useDimensions.jsx";
 import { useUniverse } from "hooks/useUniverse.jsx";
 
-import Button from "components/CustomButtons/Button.jsx";
 import Menu from "./Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
+import ChooseColorInput from "./ChooseColorInput";
 
-const useStyles = makeStyles({
+const gameOfLifeStyle = {
     root: {
         overflow: "hidden",
     },
@@ -29,7 +31,7 @@ const useStyles = makeStyles({
         right: 10,
         opacity: 0.7,
     },
-});
+};
 
 type State = {
     isPaused: boolean,
@@ -100,27 +102,53 @@ function init() {
 }
 
 function GameOfLife(props) {
-    const [state, dispatch] = useReducer(reducer, init());
-    const classes = useStyles();
+    const { classes } = props;
+    const [optionsState, optionsDispatch] = useReducer(reducer, init());
     const { numRow, numCol } = useDimensions(50, 0, false);
 
     const { universeState, universeDispatch, generation } = useUniverse(
         numRow,
         numCol,
-        state.initialSpawnRate,
-        state.isPaused
+        optionsState.initialSpawnRate,
+        optionsState.isPaused
     );
+
+    const theme = {
+        cellSize: optionsState.cellSize,
+        aliveColor: optionsState.aliveColor,
+        deadColor: optionsState.deadColor,
+    };
 
     return (
         <div className={classes.root}>
-            <Menu
-                className={classes.menu}
-                generation={generation}
-                optionsState={state}
-                optionsDispatch={dispatch}
-                universeDispatch={universeDispatch}
-            />
-            <ThemeProvider theme={state}>
+            <Menu className={classes.menu}>
+                <h3>Generation: {generation}</h3>
+                <PlayPauseButton
+                    isPaused={optionsState.isPaused}
+                    dispatch={optionsDispatch}
+                />
+                <Grid container justify="center" alignItems="center">
+                    <Grid item xs={12} lg={4}>
+                        <ChooseColorInput
+                            label="Alive Cells Color: "
+                            option="aliveColor"
+                            actionType={ACTIONS.SET_ALIVE_COLOR}
+                            defaultValue={optionsState.aliveColor}
+                            dispatch={optionsDispatch}
+                        />
+                    </Grid>
+                    <Grid item xs={12} lg={4}>
+                        <ChooseColorInput
+                            label="Dead Cells Color: "
+                            option="deadColor"
+                            actionType={ACTIONS.SET_DEAD_COLOR}
+                            defaultValue={optionsState.deadColor}
+                            dispatch={optionsDispatch}
+                        />
+                    </Grid>
+                </Grid>
+            </Menu>
+            <ThemeProvider theme={theme}>
                 <Board
                     classes={classes}
                     universe={universeState.universe}
@@ -129,11 +157,11 @@ function GameOfLife(props) {
             </ThemeProvider>
             <PlayPauseButton
                 className={classes.playPauseButton}
-                isPaused={state.isPaused}
-                dispatch={dispatch}
+                isPaused={optionsState.isPaused}
+                dispatch={optionsDispatch}
             />
         </div>
     );
 }
 
-export default GameOfLife;
+export default withStyles(gameOfLifeStyle)(GameOfLife);
