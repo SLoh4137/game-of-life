@@ -10,6 +10,8 @@ import { Grid } from "@material-ui/core";
 import useDimensions from "hooks/useDimensions.jsx";
 import { useUniverse } from "hooks/useUniverse.jsx";
 
+import GridContainer from "components/Grid/GridContainer";
+
 import Menu from "./Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
@@ -18,6 +20,9 @@ import ChooseColorInput from "./ChooseColorInput";
 const useStyles = makeStyles({
     root: {
         overflow: "hidden",
+    },
+    gridGrow: {
+        flexGrow: 1,
     },
     playPauseButton: {
         position: "absolute",
@@ -130,48 +135,48 @@ function GameOfLife(props) {
 
     return (
         <div className={classes.root}>
+            <PlayPauseButton
+                className={classes.playPauseButton}
+                isPaused={optionsState.isPaused}
+                dispatch={optionsDispatch}
+            />
             <Menu className={classes.menu}>
                 <h3>Generation: {generation}</h3>
                 <PlayPauseButton
                     isPaused={optionsState.isPaused}
                     dispatch={optionsDispatch}
                 />
-                <Grid container justify="center" alignItems="center">
-                    <Grid item xs={12} lg={4}>
-                        <ChooseColorInput
-                            label="Choose color for alive cells: "
-                            option="aliveColor"
-                            actionType={ACTIONS.SET_ALIVE_COLOR}
-                            defaultValue={optionsState.aliveColor}
-                            dispatch={optionsDispatch}
-                        />
-                    </Grid>
-                    <Grid item xs={12} lg={4}>
-                        <ChooseColorInput
-                            label="Choose color for dead cells: "
-                            option="deadColor"
-                            actionType={ACTIONS.SET_DEAD_COLOR}
-                            defaultValue={optionsState.deadColor}
-                            dispatch={optionsDispatch}
-                        />
-                    </Grid>
-                </Grid>
-            </Menu>
+                <h4>Board Customization</h4>
+                <GridContainer
+                    className={classes.gridGrow}
+                    justify="space-evenly"
+                    alignItems="center"
+                    spacing={3}
+                >
+                    <ChooseColorInput
+                        label="Choose color for alive cells: "
+                        option="aliveColor"
+                        actionType={ACTIONS.SET_ALIVE_COLOR}
+                        defaultValue={optionsState.aliveColor}
+                        dispatch={optionsDispatch}
+                    />
 
+                    <ChooseColorInput
+                        label="Choose color for dead cells: "
+                        option="deadColor"
+                        actionType={ACTIONS.SET_DEAD_COLOR}
+                        defaultValue={optionsState.deadColor}
+                        dispatch={optionsDispatch}
+                    />
+                </GridContainer>
+            </Menu>
             <Board
                 classes={classes}
                 universe={universeState.universe}
                 universeDispatch={universeDispatch}
             />
-
-            <PlayPauseButton
-                className={classes.playPauseButton}
-                isPaused={optionsState.isPaused}
-                dispatch={optionsDispatch}
-            />
         </div>
     );
 }
 
-//export default withStyles(gameOfLifeStyle)(GameOfLife);
 export default GameOfLife;
