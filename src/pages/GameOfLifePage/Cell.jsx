@@ -9,28 +9,12 @@ import { ACTIONS } from "hooks/useUniverse.jsx";
 import { CELL_TYPES } from "types/exports";
 
 type PropType = {
+    key: [number, number],
     row: Number,
     col: Number,
     state: CELL_TYPES,
     universeDispatch: Object,
 };
-
-// const useStyles = makeStyles(theme => ({
-//     aliveCell: {
-//         width: theme.cellSize,
-//         height: theme.cellSize,
-//         borderStyle: "dotted",
-//         borderColor: "black",
-//         backgroundColor: theme.aliveColor,
-//     },
-//     deadCell: {
-//         width: theme.cellSize,
-//         height: theme.cellSize,
-//         borderStyle: "dotted",
-//         borderColor: "black",
-//         backgroundColor: theme.deadColor,
-//     },
-// }));
 
 function Cell(props: PropType) {
     const { classes, row, col, state, universeDispatch } = props;
@@ -39,7 +23,7 @@ function Cell(props: PropType) {
         className =
             state === CELL_TYPES.ALIVE ? classes.aliveCell : classes.deadCell;
     }
-    //const classes = useStyles();
+
     return (
         <button
             className={className}

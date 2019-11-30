@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
 
-
 type Props = {
     className: String,
 };
