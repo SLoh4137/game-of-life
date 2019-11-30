@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { Button, SwipeableDrawer, Grid } from "@material-ui/core";
+import { Fab, SwipeableDrawer, Grid } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 
 type Props = {
     className: String,
@@ -24,13 +25,13 @@ function Menu(props: Props) {
 
     return (
         <>
-            <Button
-                color="primary"
+            <Fab
                 className={className}
+                size="small"
                 onClick={toggleDrawer(true)}
             >
-                Open Menu
-            </Button>
+                <MenuIcon />
+            </Fab>
             <SwipeableDrawer
                 anchor="bottom"
                 open={isOpen}

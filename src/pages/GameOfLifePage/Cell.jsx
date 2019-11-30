@@ -3,7 +3,6 @@
  */
 
 import React from "react";
-import { makeStyles } from "@material-ui/styles";
 
 import { ACTIONS } from "hooks/useUniverse.jsx";
 import { CELL_TYPES } from "types/exports";

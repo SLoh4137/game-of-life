@@ -29,7 +29,7 @@ const useStyles = makeStyles({
         position: "absolute",
         top: 10,
         right: 10,
-        opacity: 0.7,
+        opacity: 0.9,
     },
     aliveCell: {
         width: props => props.cellSize,
@@ -139,7 +139,7 @@ function GameOfLife(props) {
                 <Grid container justify="center" alignItems="center">
                     <Grid item xs={12} lg={4}>
                         <ChooseColorInput
-                            label="Alive Cells Color: "
+                            label="Choose color for alive cells: "
                             option="aliveColor"
                             actionType={ACTIONS.SET_ALIVE_COLOR}
                             defaultValue={optionsState.aliveColor}
@@ -148,7 +148,7 @@ function GameOfLife(props) {
                     </Grid>
                     <Grid item xs={12} lg={4}>
                         <ChooseColorInput
-                            label="Dead Cells Color: "
+                            label="Choose color for dead cells: "
                             option="deadColor"
                             actionType={ACTIONS.SET_DEAD_COLOR}
                             defaultValue={optionsState.deadColor}
@@ -157,13 +157,13 @@ function GameOfLife(props) {
                     </Grid>
                 </Grid>
             </Menu>
-            =
+
             <Board
                 classes={classes}
                 universe={universeState.universe}
                 universeDispatch={universeDispatch}
             />
-            =
+
             <PlayPauseButton
                 className={classes.playPauseButton}
                 isPaused={optionsState.isPaused}

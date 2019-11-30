@@ -18,7 +18,7 @@ function ChooseColorInput(props: Props) {
     };
 
     return (
-        <FormControl fullWidth variant="outlined" margin="normal">
+        <FormControl style={{width: "80%"}} variant="outlined" margin="normal">
             <InputLabel align="center" htmlFor={option}>
                 {label}
             </InputLabel>
