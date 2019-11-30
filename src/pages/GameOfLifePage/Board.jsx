@@ -10,7 +10,11 @@ import CellRow from "./CellRow";
 type PropType = {
     universe: UniverseType,
     universeDispatch: Object,
+    cellSize: Number,
+    aliveColor: String,
+    deadColor: String,
 };
+
 
 function Board(props: PropType) {
     const { universe, universeDispatch } = props;

@@ -3,9 +3,10 @@
  */
 
 import React from "react";
+import { makeStyles  } from '@material-ui/styles';
 
 import { ACTIONS } from "hooks/useUniverse.jsx";
-import { CELL_SIZE, CELL_TYPES } from "types/exports";
+import { CELL_TYPES } from "types/exports";
 
 type PropType = {
     row: Number,
@@ -14,18 +15,29 @@ type PropType = {
     universeDispatch: Object,
 };
 
-function Cell(props: PropType) {
-    const { row, col, state, universeDispatch } = props;
-    const style = {
-        width: CELL_SIZE,
-        height: CELL_SIZE,
-        backgroundColor: state === CELL_TYPES.ALIVE ? "black" : "white",
+const useStyles = makeStyles(theme => ({
+    aliveCell: {
+        width: theme.cellSize,
+        height: theme.cellSize,
         borderStyle: "dotted",
         borderColor: "black",
-    };
+        backgroundColor: theme.aliveColor,
+    },
+    deadCell: {
+        width: theme.cellSize,
+        height: theme.cellSize,
+        borderStyle: "dotted",
+        borderColor: "black",
+        backgroundColor: theme.deadColor,
+    },
+}));
+
+function Cell(props: PropType) {
+    const { row, col, state, universeDispatch } = props;
+    const classes = useStyles();
     return (
         <button
-            style={style}
+            className={state === CELL_TYPES.ALIVE ? classes.aliveCell : classes.deadCell}
             onClick={() => universeDispatch({
                         type: ACTIONS.FLIP,
                         row: row,
