@@ -6,7 +6,6 @@
 import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
-    console.log(window);
     if (typeof window !== "undefined") {
         return {
             width: window.innerWidth,
