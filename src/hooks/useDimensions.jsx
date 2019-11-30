@@ -19,15 +19,15 @@ function getWindowDimensions() {
     }
 }
 
-function convert(cellSize, spacing, ref) {
-    const { width, height } = getWindowDimensions(ref);
+function convert(cellSize, spacing) {
+    const { width, height } = getWindowDimensions();
     const size = cellSize + spacing * 2;
     const numRow = Math.floor(height / size);
     const numCol = Math.floor(width / size);
     return { numRow, numCol };
 }
 
-export default function useDimensions(cellSize, spacing, allowResize) {
+export default function useDimensions(cellSize: number, spacing: number, allowResize: boolean) {
     const [universeDimensions, setUniverseDimensions] = useState(convert(cellSize, spacing));
 
     useEffect(() => {
