@@ -5,11 +5,13 @@ import React, { useReducer } from "react";
 
 import { makeStyles } from "@material-ui/styles";
 
-import { Grid } from "@material-ui/core";
-
 import useDimensions from "hooks/useDimensions.jsx";
-import { useUniverse } from "hooks/useUniverse.jsx";
+import {
+    useUniverse,
+    ACTIONS as UNIVERSE_ACTIONS,
+} from "hooks/useUniverse.jsx";
 
+import Button from "components/CustomButtons/Button";
 import GridContainer from "components/Grid/GridContainer";
 
 import Menu from "./Menu";
@@ -151,7 +153,7 @@ function GameOfLife(props) {
                     className={classes.gridGrow}
                     justify="space-evenly"
                     alignItems="center"
-                    spacing={3}
+                    spacing={8}
                 >
                     <ChooseColorInput
                         label="Choose color for alive cells: "
@@ -168,6 +170,27 @@ function GameOfLife(props) {
                         defaultValue={optionsState.deadColor}
                         dispatch={optionsDispatch}
                     />
+                </GridContainer>
+                <GridContainer justify="center">
+                    <Button
+                        onClick={() => {
+                            universeDispatch({
+                                type: UNIVERSE_ACTIONS.RESET,
+                                initialSpawnRate: optionsState.initialSpawnRate,
+                            });
+                        }}
+                    >
+                        RESET
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            universeDispatch({
+                                type: UNIVERSE_ACTIONS.CLEAR,
+                            });
+                        }}
+                    >
+                        CLEAR
+                    </Button>
                 </GridContainer>
             </Menu>
             <Board

@@ -199,16 +199,18 @@ function initialize({ numRow, numCol, spawnRate }) {
 export const ACTIONS = {
     LIVE_SET: 0,
     FLIP: 1,
+    RESET: 2,
+    CLEAR: 3,
 };
 
 function reducer(state, action) {
     let { liveSet, universe } = state;
+    const numRow = universe.length;
+    const numCol = universe[0].length;
 
     switch (action.type) {
         case ACTIONS.LIVE_SET:
             liveSet = action.liveSet;
-            const numRow = universe.length;
-            const numCol = universe[0].length;
             universe = createUniverse(numRow, numCol, liveSet);
             break;
         case ACTIONS.FLIP:
@@ -222,6 +224,13 @@ function reducer(state, action) {
                 universe[row][col] = CELL_TYPES.ALIVE;
             }
 
+            break;
+        case ACTIONS.RESET:
+            const { initialSpawnRate: spawnRate } = action;
+            return initialize({ numRow, numCol, spawnRate });
+        case ACTIONS.CLEAR:
+            liveSet = new Set();
+            universe = createUniverse(numRow, numCol, liveSet);
             break;
         default:
             throw new Error("Invalid action provided");
