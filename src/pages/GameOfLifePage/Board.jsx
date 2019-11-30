@@ -14,7 +14,7 @@ type PropType = {
 
 
 function Board(props: PropType) {
-    const { universe, universeDispatch } = props;
+    const { classes, universe, universeDispatch } = props;
     const displayBoard = [];
     const universeLength = universe ? universe.length : 0;
     let rowNum = 0;
@@ -22,6 +22,7 @@ function Board(props: PropType) {
     for (rowNum = 0; rowNum < universeLength; rowNum += 1) {
         displayBoard.push(
             <CellRow
+                classes={classes}
                 key={rowNum}
                 row={universe[rowNum]}
                 rowNum={rowNum}

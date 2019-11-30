@@ -14,12 +14,13 @@ type PropType = {
 };
 
 function CellRow(props: PropType) {
-    const { row, rowNum, universeDispatch } = props;
+    const { classes, row, rowNum, universeDispatch } = props;
     const displayRow = [];
     const rowLength = row ? row.length : 0;
     for (let colNum = 0; colNum < rowLength; colNum++) {
         displayRow.push(
             <Cell
+                classes={classes}
                 key={[rowNum, colNum]}
                 row={rowNum}
                 col={colNum}

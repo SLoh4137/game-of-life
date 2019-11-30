@@ -203,33 +203,42 @@ export const ACTIONS = {
 
 function reducer(state, action) {
     let { liveSet, universe } = state;
+
     switch (action.type) {
         case ACTIONS.LIVE_SET:
             liveSet = action.liveSet;
+            const numRow = universe.length;
+            const numCol = universe[0].length;
+            universe = createUniverse(numRow, numCol, liveSet);
             break;
         case ACTIONS.FLIP:
             const { row, col } = action;
             const keyString = convertToKey(row, col);
             if (isCellAlive(keyString, state.liveSet)) {
                 liveSet.delete();
+                universe[row][col] = CELL_TYPES.DEAD;
             } else {
                 liveSet.add(keyString);
+                universe[row][col] = CELL_TYPES.ALIVE;
             }
+
             break;
         default:
             throw new Error("Invalid action provided");
     }
 
-    const numRow = universe.length;
-    const numCol = universe[0].length;
-
     return {
         liveSet: liveSet,
-        universe: createUniverse(numRow, numCol, liveSet),
+        universe: universe,
     };
 }
 
-export function useUniverse(numRow: number, numCol: number, spawnRate: number, isPaused) {
+export function useUniverse(
+    numRow: number,
+    numCol: number,
+    spawnRate: number,
+    isPaused
+) {
     const [state, dispatch] = useReducer(
         reducer,
         { numRow, numCol, spawnRate },
