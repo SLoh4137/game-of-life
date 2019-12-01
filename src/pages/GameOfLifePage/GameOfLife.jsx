@@ -11,13 +11,13 @@ import {
     ACTIONS as UNIVERSE_ACTIONS,
 } from "hooks/useUniverse.jsx";
 
-import Button from "components/CustomButtons/Button";
 import GridContainer from "components/Grid/GridContainer";
 
 import Menu from "./Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
 import ChooseColorInput from "./ChooseColorInput";
+import UniverseControls from "./UniverseControls";
 
 const useStyles = makeStyles({
     root: {
@@ -148,6 +148,11 @@ function GameOfLife(props) {
                     isPaused={optionsState.isPaused}
                     dispatch={optionsDispatch}
                 />
+                <UniverseControls
+                    optionsState={optionsState}
+                    optionsDispatch={optionsDispatch}
+                    universeDispatch={universeDispatch}
+                />
                 <h4>Board Customization</h4>
                 <GridContainer
                     className={classes.gridGrow}
@@ -170,27 +175,6 @@ function GameOfLife(props) {
                         defaultValue={optionsState.deadColor}
                         dispatch={optionsDispatch}
                     />
-                </GridContainer>
-                <GridContainer justify="center">
-                    <Button
-                        onClick={() => {
-                            universeDispatch({
-                                type: UNIVERSE_ACTIONS.RESET,
-                                initialSpawnRate: optionsState.initialSpawnRate,
-                            });
-                        }}
-                    >
-                        RESET
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            universeDispatch({
-                                type: UNIVERSE_ACTIONS.CLEAR,
-                            });
-                        }}
-                    >
-                        CLEAR
-                    </Button>
                 </GridContainer>
             </Menu>
             <Board
