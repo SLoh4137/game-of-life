@@ -12,14 +12,10 @@ import {
     ACTIONS as UNIVERSE_ACTIONS,
 } from "hooks/useUniverse.jsx";
 
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-
 import Menu from "./Menu/Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
-import ChooseColorInput from "./Menu/ChooseColorInput";
-import UniverseControls from "./Menu/UniverseControls";
+
 
 const useStyles = makeStyles({
     root: {
@@ -80,44 +76,13 @@ export default function GameOfLife(props) {
                 isPaused={optionsState.isPaused}
                 dispatch={optionsDispatch}
             />
-            <Menu className={classes.menu}>
-                <h3>Generation: {generation}</h3>
-                <PlayPauseButton
-                    isPaused={optionsState.isPaused}
-                    dispatch={optionsDispatch}
-                />
-                <UniverseControls
-                    optionsState={optionsState}
-                    optionsDispatch={optionsDispatch}
-                    universeDispatch={universeDispatch}
-                />
-                <h4>Board Customization</h4>
-                <GridContainer
-                    justify="center"
-                    alignContent="center"
-                    alignItems="center"
-                >
-                    <GridItem xs={6}>
-                        <ChooseColorInput
-                            label="Alive Color"
-                            option="aliveColor"
-                            actionType={OPTION_ACTIONS.SET_ALIVE_COLOR}
-                            defaultValue={optionsState.aliveColor}
-                            dispatch={optionsDispatch}
-                        />
-                    </GridItem>
-
-                    <GridItem xs={6}>
-                        <ChooseColorInput
-                            label="Dead Color"
-                            option="deadColor"
-                            actionType={OPTION_ACTIONS.SET_DEAD_COLOR}
-                            defaultValue={optionsState.deadColor}
-                            dispatch={optionsDispatch}
-                        />
-                    </GridItem>
-                </GridContainer>
-            </Menu>
+            <Menu
+                className={classes.menu}
+                generation={generation}
+                optionsState={optionsState}
+                optionsDispatch={optionsDispatch}
+                universeDispatch={universeDispatch}
+            />
             <Board
                 classes={classes}
                 universe={universeState.universe}
