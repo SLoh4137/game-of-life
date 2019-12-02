@@ -5,6 +5,7 @@ import {
     InputLabel,
     Input,
     FormControlLabel,
+    TextField,
 } from "@material-ui/core";
 
 type Props = {
@@ -23,30 +24,39 @@ function ChooseColorInput(props: Props) {
     };
 
     return (
-        // <FormControl style={{width: "80%"}} variant="outlined" margin="normal">
-        //     <InputLabel align="center" htmlFor={option}>
-        //         {label}
-        //     </InputLabel>
-        //     <Input
-        //         id={option}
-        //         type="color"
-        //         onChange={handleChange}
-        //         defaultValue={defaultValue}
-        //     />
-        // </FormControl>
-        <FormControlLabel
-            control={
-                <Input
-                    id={option}
-                    fullWidth
-                    type="color"
-                    onChange={handleChange}
-                    defaultValue={defaultValue}
-                />
-            }
+        // <FormControlLabel
+        //     control={
+        //         <Input
+        //             id={option}
+        //             fullWidth
+        //             type="color"
+        //             onChange={handleChange}
+        //             defaultValue={defaultValue}
+        //         />
+        //     }
+        //     label={label}
+        //     labelPlacement="top"
+        //     variant="outlined"
+        // />
+        <TextField
+            //fullWidth
+            id={`outlined-set-color-${option}`}
             label={label}
-            labelPlacement="top"
+            type="color"
+            InputLabelProps={{
+                shrink: true,
+            }}
+            InputProps={{
+                style: {
+                    width: "100px"
+                }
+            }}
+            onChange={handleChange}
+            defaultValue={defaultValue}
+            margin="normal"
+            variant="outlined"
         />
+        
     );
 }
 

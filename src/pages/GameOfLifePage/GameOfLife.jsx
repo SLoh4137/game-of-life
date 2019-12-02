@@ -12,6 +12,7 @@ import {
 } from "hooks/useUniverse.jsx";
 
 import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 
 import Menu from "./Menu";
 import Board from "./Board";
@@ -65,14 +66,23 @@ type State = {
 export const ACTIONS = {
     PLAYPAUSE: 0,
     SET_CELL_SIZE: 1,
-    SET_SPAWN_RATE: 2,
-    RESET: 3,
-    SET_ALIVE_COLOR: 4,
-    SET_DEAD_COLOR: 5,
+    SET_CELL_SPACING: 2,
+    SET_SPAWN_RATE: 3,
+    RESET: 4,
+    SET_ALIVE_COLOR: 5,
+    SET_DEAD_COLOR: 6,
+    SET_CELL_SPACING: 7,
 };
 
 function reducer(state: State, action) {
-    let { isPaused, cellSize, initialSpawnRate, aliveColor, deadColor } = state;
+    let {
+        isPaused,
+        cellSize,
+        cellSpacing,
+        initialSpawnRate,
+        aliveColor,
+        deadColor,
+    } = state;
     switch (action.type) {
         case ACTIONS.PLAYPAUSE:
             isPaused = !isPaused;
@@ -81,6 +91,11 @@ function reducer(state: State, action) {
             if (action.cellSize === undefined)
                 throw new Error("Cell size not provided");
             cellSize = action.cellSize;
+            break;
+        case ACTIONS.SET_CELL_SPACING:
+            if (action.cellSpacing === undefined)
+                throw new Error("Cell spacing not provided");
+            cellSpacing = action.cellSpacing;
             break;
         case ACTIONS.SET_SPAWN_RATE:
             if (action.initialSpawnRate === undefined)
@@ -106,6 +121,7 @@ function reducer(state: State, action) {
     return {
         isPaused,
         cellSize,
+        cellSpacing,
         initialSpawnRate,
         aliveColor,
         deadColor,
@@ -116,6 +132,7 @@ function init() {
     return {
         isPaused: false,
         cellSize: 50,
+        cellSpacing: 0,
         initialSpawnRate: 0.3,
         aliveColor: "#000000",
         deadColor: "#ffffff",
@@ -124,7 +141,11 @@ function init() {
 
 function GameOfLife(props) {
     const [optionsState, optionsDispatch] = useReducer(reducer, init());
-    const { numRow, numCol } = useDimensions(50, 0, false);
+    const { numRow, numCol } = useDimensions(
+        optionsState.cellSize,
+        optionsState.cellSpacing,
+        false
+    );
 
     const { universeState, universeDispatch, generation } = useUniverse(
         numRow,
@@ -154,27 +175,26 @@ function GameOfLife(props) {
                     universeDispatch={universeDispatch}
                 />
                 <h4>Board Customization</h4>
-                <GridContainer
-                    className={classes.gridGrow}
-                    justify="space-evenly"
-                    alignItems="center"
-                    spacing={8}
-                >
-                    <ChooseColorInput
-                        label="Choose color for alive cells: "
-                        option="aliveColor"
-                        actionType={ACTIONS.SET_ALIVE_COLOR}
-                        defaultValue={optionsState.aliveColor}
-                        dispatch={optionsDispatch}
-                    />
+                <GridContainer justify="center" alignContent="center" alignItems="center">
+                    <GridItem xs={6}>
+                        <ChooseColorInput
+                            label="Alive Color"
+                            option="aliveColor"
+                            actionType={ACTIONS.SET_ALIVE_COLOR}
+                            defaultValue={optionsState.aliveColor}
+                            dispatch={optionsDispatch}
+                        />
+                    </GridItem>
 
-                    <ChooseColorInput
-                        label="Choose color for dead cells: "
-                        option="deadColor"
-                        actionType={ACTIONS.SET_DEAD_COLOR}
-                        defaultValue={optionsState.deadColor}
-                        dispatch={optionsDispatch}
-                    />
+                    <GridItem xs={6}>
+                        <ChooseColorInput
+                            label="Dead Color"
+                            option="deadColor"
+                            actionType={ACTIONS.SET_DEAD_COLOR}
+                            defaultValue={optionsState.deadColor}
+                            dispatch={optionsDispatch}
+                        />
+                    </GridItem>
                 </GridContainer>
             </Menu>
             <Board
