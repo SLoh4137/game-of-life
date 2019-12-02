@@ -56,12 +56,14 @@ function Menu(props: Props) {
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
             >
-                <Grid
-                    container
+                <GridContainer
                     direction="column"
                     justify="center"
                     alignItems="center"
+                    alignContent="center"
                 >
+
+
                     <h3>Generation: {generation}</h3>
                     <PlayPauseButton
                         isPaused={optionsState.isPaused}
@@ -98,7 +100,10 @@ function Menu(props: Props) {
                             />
                         </GridItem>
                     </GridContainer>
-                </Grid>
+
+
+
+                </GridContainer>
             </SwipeableDrawer>
         </>
     );
