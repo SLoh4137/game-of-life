@@ -15,11 +15,11 @@ import {
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
-import ChooseColorInput from "./ChooseColorInput";
-import UniverseControls from "./UniverseControls";
+import ChooseColorInput from "./Menu/ChooseColorInput";
+import UniverseControls from "./Menu/UniverseControls";
 
 const useStyles = makeStyles({
     root: {

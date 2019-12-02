@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ACTIONS } from "./GameOfLife";
+import { ACTIONS } from "hooks/useOptions";
 
 import Fab from "@material-ui/core/Fab";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
