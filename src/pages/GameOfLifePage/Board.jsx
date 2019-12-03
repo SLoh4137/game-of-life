@@ -43,7 +43,7 @@ function Board(props: PropType) {
     }
 
     return (
-        <GridContainer direction="column" justify="center" alignItems="center">
+        <GridContainer direction="column" justify="center" alignItems="center" alignContent="center">
             {displayBoard}
         </GridContainer>
     );

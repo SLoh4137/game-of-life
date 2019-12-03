@@ -31,10 +31,16 @@ export default function useDimensions(cellSize: number, spacing: number, allowRe
     const [universeDimensions, setUniverseDimensions] = useState(convert(cellSize, spacing));
 
     useEffect(() => {
+        setUniverseDimensions(convert(cellSize, spacing));
+    }, [cellSize, spacing]);
+
+    useEffect(() => {
         if (allowResize) {
             const handleResize = () => {
                 setUniverseDimensions(convert(cellSize, spacing));
             };
+            
+            handleResize();
 
             window.addEventListener("resize", handleResize);
             return () => window.removeEventListener("resize", handleResize);

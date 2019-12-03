@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     aliveCell: {
         width: props => props.cellSize,
         height: props => props.cellSize,
+        margin: props => props.cellSpacing,
         borderStyle: "dotted",
         borderColor: "black",
         backgroundColor: props => props.aliveColor,
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
     deadCell: {
         width: props => props.cellSize,
         height: props => props.cellSize,
+        margin: props => props.cellSpacing,
         borderStyle: "dotted",
         borderColor: "black",
         backgroundColor: props => props.deadColor,
@@ -57,8 +59,11 @@ export default function GameOfLife(props) {
     const { numRow, numCol } = useDimensions(
         optionsState.cellSize,
         optionsState.cellSpacing,
-        false
+        false,
     );
+
+    console.log(numRow);
+    console.log(numCol);
 
     const { universeState, universeDispatch, generation } = useUniverse(
         numRow,

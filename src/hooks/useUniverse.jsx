@@ -182,7 +182,7 @@ function createUniverse(numRow, numCol, liveSet) {
     return newUniverse;
 }
 
-function initialize({ numRow, numCol, spawnRate }) {
+function initSet(numRow, numCol, spawnRate) {
     const liveSet = new Set();
     for (let row = 0; row < numRow; row++) {
         for (let col = 0; col < numCol; col++) {
@@ -192,8 +192,19 @@ function initialize({ numRow, numCol, spawnRate }) {
             }
         }
     }
+    return liveSet;
+}
+
+function initialize({ numRow, numCol, spawnRate }) {
+    const liveSet = initSet(numRow, numCol, spawnRate);
     const universe = createUniverse(numRow, numCol, liveSet);
-    return { liveSet: liveSet, universe: universe };
+    return {
+        liveSet: liveSet,
+        universe: universe,
+        numRow: numRow,
+        numCol: numCol,
+        spawnRate: spawnRate,
+    };
 }
 
 export const ACTIONS = {
@@ -204,9 +215,7 @@ export const ACTIONS = {
 };
 
 function reducer(state, action) {
-    let { liveSet, universe } = state;
-    const numRow = universe.length;
-    const numCol = universe[0].length;
+    let { liveSet, universe, numRow, numCol, spawnRate } = state;
 
     switch (action.type) {
         case ACTIONS.LIVE_SET:
@@ -226,7 +235,9 @@ function reducer(state, action) {
 
             break;
         case ACTIONS.RESET:
-            const { initialSpawnRate: spawnRate } = action;
+            if (action.numRow !== undefined) numRow = action.numRow;
+            if (action.numCol !== undefined) numCol = action.numCol;
+            if (action.spawnRate !== undefined) spawnRate = action.spawnRate;
             return initialize({ numRow, numCol, spawnRate });
         case ACTIONS.CLEAR:
             liveSet = new Set();
@@ -239,6 +250,9 @@ function reducer(state, action) {
     return {
         liveSet: liveSet,
         universe: universe,
+        numRow: numRow,
+        numCol: numCol,
+        spawnRate: spawnRate,
     };
 }
 
@@ -246,7 +260,7 @@ export function useUniverse(
     numRow: number,
     numCol: number,
     spawnRate: number,
-    isPaused
+    isPaused: Boolean
 ) {
     const [state, dispatch] = useReducer(
         reducer,
@@ -254,6 +268,17 @@ export function useUniverse(
         initialize
     );
     const [generation, setGeneration] = useState(0);
+
+    useEffect(() => {
+        // Reset the board when parameters change
+        dispatch({
+            type: ACTIONS.RESET,
+            numRow: numRow,
+            numCol: numCol,
+            spawnRate: spawnRate,
+        });
+        setGeneration(0);
+    }, [numRow, numCol, spawnRate]);
 
     useEffect(() => {
         const interval = setInterval(() => {
