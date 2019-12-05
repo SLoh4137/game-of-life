@@ -3,7 +3,7 @@
  */
 import React from "react";
 
-import { makeStyles, withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/styles";
 
 import useDimensions from "hooks/useDimensions.jsx";
 import { useOptions } from "hooks/useOptions.jsx";
@@ -31,25 +31,6 @@ const gameOfLifeStyles = {
     },
 };
 
-const useStyles = makeStyles({
-    aliveCell: {
-        width: props => props.cellSize,
-        height: props => props.cellSize,
-        margin: props => props.cellSpacing,
-        borderStyle: "dotted",
-        borderColor: "black",
-        backgroundColor: props => props.aliveColor,
-    },
-    deadCell: {
-        width: props => props.cellSize,
-        height: props => props.cellSize,
-        margin: props => props.cellSpacing,
-        borderStyle: "dotted",
-        borderColor: "black",
-        backgroundColor: props => props.deadColor,
-    },
-});
-
 function GameOfLife(props) {
     const { classes } = props;
     const { optionsState, optionsDispatch } = useOptions();
@@ -66,13 +47,6 @@ function GameOfLife(props) {
         optionsState.isPaused
     );
 
-    const boardClasses = useStyles({
-        cellSize: optionsState.cellSize,
-        cellSpacing: optionsState.cellSpacing,
-        aliveColor: optionsState.aliveColor,
-        deadColor: optionsState.deadColor,
-    });
-
     return (
         <div className={classes.root}>
             <PlayPauseButton
@@ -88,7 +62,10 @@ function GameOfLife(props) {
                 universeDispatch={universeDispatch}
             />
             <Board
-                classes={boardClasses}
+                cellSize={optionsState.cellSize}
+                cellSpacing={optionsState.cellSpacing}
+                aliveColor={optionsState.aliveColor}
+                deadColor={optionsState.deadColor}
                 universe={universeState.universe}
                 universeDispatch={universeDispatch}
             />

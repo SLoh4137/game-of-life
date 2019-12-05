@@ -3,6 +3,7 @@
  */
 
 import React from "react";
+import classNames from "classnames";
 
 import { ACTIONS } from "hooks/useUniverse.jsx";
 import { CELL_TYPES } from "types/exports";
@@ -21,6 +22,7 @@ function Cell(props: PropType) {
     if (classes !== undefined) {
         className =
             state === CELL_TYPES.ALIVE ? classes.aliveCell : classes.deadCell;
+        className = classNames(className, classes.cell);
     }
 
     return (

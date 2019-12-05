@@ -2,7 +2,9 @@
  * @flow
  */
 import React from "react";
+
 import type { UniverseType } from "types/typeExports";
+import { withStyles } from "@material-ui/styles";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Cell from "./Cell";
@@ -11,6 +13,22 @@ type PropType = {
     classes: Object,
     universe: UniverseType,
     universeDispatch: Object,
+};
+
+const boardStyle = {
+    cell: {
+        width: props => props.cellSize,
+        height: props => props.cellSize,
+        margin: props => props.cellSpacing,
+        borderStyle: "dotted",
+        borderColor: "black",
+    },
+    aliveCell: {
+        backgroundColor: props => props.aliveColor,
+    },
+    deadCell: {
+        backgroundColor: props => props.deadColor,
+    },
 };
 
 function Board(props: PropType) {
@@ -49,4 +67,4 @@ function Board(props: PropType) {
     );
 }
 
-export default Board;
+export default withStyles(boardStyle)(Board);
