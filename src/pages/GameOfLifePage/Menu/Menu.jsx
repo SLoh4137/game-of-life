@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { ACTIONS as OPTION_ACTIONS } from "hooks/useOptions";
-
 import { Fab, SwipeableDrawer } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import GridContainer from "components/Grid/GridContainer";
@@ -12,7 +10,6 @@ import UniverseControls from "./UniverseControls";
 
 type Props = {
     className: String,
-    classes: String,
     generation: number,
     optionsState: Object,
     optionsDispatch: Object,
@@ -22,7 +19,6 @@ type Props = {
 function Menu(props: Props) {
     const {
         className,
-        classes,
         generation,
         optionsState,
         optionsDispatch,
@@ -61,7 +57,6 @@ function Menu(props: Props) {
                 <GridContainer justify="center">
                     <GridItem xs={12} sm={6}>
                         <UniverseControls
-                            classes={classes}
                             optionsState={optionsState}
                             optionsDispatch={optionsDispatch}
                             universeDispatch={universeDispatch}
@@ -69,7 +64,6 @@ function Menu(props: Props) {
                     </GridItem>
                     <GridItem xs={12} sm={6}>
                         <BoardCustomization
-                            classes={classes}
                             optionsState={optionsState}
                             optionsDispatch={optionsDispatch}
                         />

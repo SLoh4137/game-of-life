@@ -6,24 +6,20 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
 import useDimensions from "hooks/useDimensions.jsx";
-import { useOptions, ACTIONS as OPTION_ACTIONS } from "hooks/useOptions.jsx";
-import {
-    useUniverse,
-    ACTIONS as UNIVERSE_ACTIONS,
-} from "hooks/useUniverse.jsx";
+import { useOptions } from "hooks/useOptions.jsx";
+import { useUniverse } from "hooks/useUniverse.jsx";
 
 import Menu from "./Menu/Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
-
 
 const useStyles = makeStyles({
     root: {
         overflow: "hidden",
     },
     centered: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        marginLeft: "auto",
+        marginRight: "auto",
     },
     playPauseButton: {
         position: "absolute",
@@ -60,7 +56,7 @@ export default function GameOfLife(props) {
     const { numRow, numCol } = useDimensions(
         optionsState.cellSize,
         optionsState.cellSpacing,
-        false,
+        false
     );
 
     const { universeState, universeDispatch, generation } = useUniverse(

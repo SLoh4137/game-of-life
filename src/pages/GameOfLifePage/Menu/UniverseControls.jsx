@@ -8,7 +8,7 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import PlayPauseButton from "../PlayPauseButton";
 
-import { TextField, Paper, CardHeader } from "@material-ui/core";
+import { TextField, Paper } from "@material-ui/core";
 
 import { ACTIONS as OPTION_ACTIONS } from "hooks/useOptions";
 import { ACTIONS as UNIVERSE_ACTIONS } from "hooks/useUniverse";

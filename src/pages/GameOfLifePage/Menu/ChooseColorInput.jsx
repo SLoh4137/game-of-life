@@ -1,12 +1,6 @@
 import React from "react";
 
-import {
-    FormControl,
-    InputLabel,
-    Input,
-    FormControlLabel,
-    TextField,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 type Props = {
     label: String,
@@ -34,15 +28,14 @@ function ChooseColorInput(props: Props) {
             }}
             InputProps={{
                 style: {
-                    width: "150px"
-                }
+                    width: "150px",
+                },
             }}
             onChange={handleChange}
             defaultValue={defaultValue}
             margin="normal"
             variant="outlined"
         />
-        
     );
 }
 

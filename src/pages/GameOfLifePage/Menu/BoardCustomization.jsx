@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function BoardCustomization(props: Props) {
-    const { classes, optionsState, optionsDispatch } = props;
+    const { optionsState, optionsDispatch } = props;
     return (
         <Paper>
             <h4 align="center">Board Customization</h4>
