@@ -21,6 +21,10 @@ type Props = {
 
 export default function BoardCustomization(props: Props) {
     const { optionsState, optionsDispatch } = props;
+
+    // The following are needed to allow gatsby build to verify optionsState exists
+    const { aliveColor, deadColor} = optionsState ? optionsState : {};
+
     return (
         <Paper>
             <h4 align="center">Board Customization</h4>
@@ -30,7 +34,7 @@ export default function BoardCustomization(props: Props) {
                         label="Alive Color"
                         option="aliveColor"
                         actionType={OPTION_ACTIONS.SET_ALIVE_COLOR}
-                        defaultValue={optionsState.aliveColor}
+                        defaultValue={aliveColor}
                         dispatch={optionsDispatch}
                     />
                 </GridItem>
@@ -40,7 +44,7 @@ export default function BoardCustomization(props: Props) {
                         label="Dead Color"
                         option="deadColor"
                         actionType={OPTION_ACTIONS.SET_DEAD_COLOR}
-                        defaultValue={optionsState.deadColor}
+                        defaultValue={deadColor}
                         dispatch={optionsDispatch}
                     />
                 </GridItem>

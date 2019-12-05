@@ -3,7 +3,7 @@
  */
 import React from "react";
 
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, withStyles } from "@material-ui/styles";
 
 import useDimensions from "hooks/useDimensions.jsx";
 import { useOptions } from "hooks/useOptions.jsx";
@@ -13,13 +13,9 @@ import Menu from "./Menu/Menu";
 import Board from "./Board";
 import PlayPauseButton from "./PlayPauseButton";
 
-const useStyles = makeStyles({
+const gameOfLifeStyles = {
     root: {
         overflow: "hidden",
-    },
-    centered: {
-        marginLeft: "auto",
-        marginRight: "auto",
     },
     playPauseButton: {
         position: "absolute",
@@ -33,6 +29,9 @@ const useStyles = makeStyles({
         right: 10,
         opacity: 0.9,
     },
+};
+
+const useStyles = makeStyles({
     aliveCell: {
         width: props => props.cellSize,
         height: props => props.cellSize,
@@ -51,7 +50,8 @@ const useStyles = makeStyles({
     },
 });
 
-export default function GameOfLife(props) {
+function GameOfLife(props) {
+    const { classes } = props;
     const { optionsState, optionsDispatch } = useOptions();
     const { numRow, numCol } = useDimensions(
         optionsState.cellSize,
@@ -66,7 +66,12 @@ export default function GameOfLife(props) {
         optionsState.isPaused
     );
 
-    const classes = useStyles(optionsState);
+    const boardClasses = useStyles({
+        cellSize: optionsState.cellSize,
+        cellSpacing: optionsState.cellSpacing,
+        aliveColor: optionsState.aliveColor,
+        deadColor: optionsState.deadColor,
+    });
 
     return (
         <div className={classes.root}>
@@ -77,17 +82,18 @@ export default function GameOfLife(props) {
             />
             <Menu
                 className={classes.menu}
-                classes={classes}
                 generation={generation}
                 optionsState={optionsState}
                 optionsDispatch={optionsDispatch}
                 universeDispatch={universeDispatch}
             />
             <Board
-                classes={classes}
+                classes={boardClasses}
                 universe={universeState.universe}
                 universeDispatch={universeDispatch}
             />
         </div>
     );
 }
+
+export default withStyles(gameOfLifeStyles)(GameOfLife);

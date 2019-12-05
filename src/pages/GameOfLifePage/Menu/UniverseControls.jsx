@@ -23,6 +23,9 @@ type Props = {
 function UniverseControls(props: Props) {
     const { optionsState, optionsDispatch, universeDispatch } = props;
 
+    // Needed for gatsby build
+    const { isPaused, cellSize, cellSpacing } = optionsState ? optionsState : {};
+
     return (
         <Paper>
             <GridContainer
@@ -34,7 +37,7 @@ function UniverseControls(props: Props) {
                 <h4 align="center">Board Controls</h4>
 
                 <PlayPauseButton
-                    isPaused={optionsState.isPaused}
+                    isPaused={isPaused}
                     dispatch={optionsDispatch}
                 />
 
@@ -45,7 +48,7 @@ function UniverseControls(props: Props) {
                             id="outlined-set-cell-size"
                             label="Cell Size"
                             type="number"
-                            defaultValue={optionsState.cellSize}
+                            defaultValue={cellSize}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -65,7 +68,7 @@ function UniverseControls(props: Props) {
                             id="outlined-set-cell-spacing"
                             label="Cell Spacing"
                             type="number"
-                            defaultValue={optionsState.cellSpacing}
+                            defaultValue={cellSpacing}
                             InputLabelProps={{
                                 shrink: true,
                             }}
