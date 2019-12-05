@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{TmSq:function(e,n,t){"use strict";t.r(n);var a=t("q1tI"),c=t.n(a),o=t("l7+K"),l=t("cv56");n.default=function(e){var n=e.classes,t=e.row,a=e.col,s=e.state,r=e.universeDispatch,i="";return void 0!==n&&(i=s===l.a.ALIVE?n.aliveCell:n.deadCell),c.a.createElement("button",{className:i,onClick:function(){return r({type:o.a.FLIP,row:t,col:a})}})}}}]);
+//# sourceMappingURL=component---src-pages-game-of-life-page-cell-jsx-92db3e5ef16fb87fef71.js.map
