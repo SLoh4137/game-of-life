@@ -24,20 +24,6 @@ function ChooseColorInput(props: Props) {
     };
 
     return (
-        // <FormControlLabel
-        //     control={
-        //         <Input
-        //             id={option}
-        //             fullWidth
-        //             type="color"
-        //             onChange={handleChange}
-        //             defaultValue={defaultValue}
-        //         />
-        //     }
-        //     label={label}
-        //     labelPlacement="top"
-        //     variant="outlined"
-        // />
         <TextField
             //fullWidth
             id={`outlined-set-color-${option}`}
@@ -48,7 +34,7 @@ function ChooseColorInput(props: Props) {
             }}
             InputProps={{
                 style: {
-                    width: "100px"
+                    width: "150px"
                 }
             }}
             onChange={handleChange}

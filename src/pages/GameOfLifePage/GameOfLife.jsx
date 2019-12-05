@@ -21,8 +21,9 @@ const useStyles = makeStyles({
     root: {
         overflow: "hidden",
     },
-    gridGrow: {
-        flexGrow: 1,
+    centered: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     playPauseButton: {
         position: "absolute",
@@ -62,9 +63,6 @@ export default function GameOfLife(props) {
         false,
     );
 
-    console.log(numRow);
-    console.log(numCol);
-
     const { universeState, universeDispatch, generation } = useUniverse(
         numRow,
         numCol,
@@ -83,6 +81,7 @@ export default function GameOfLife(props) {
             />
             <Menu
                 className={classes.menu}
+                classes={classes}
                 generation={generation}
                 optionsState={optionsState}
                 optionsDispatch={optionsDispatch}
