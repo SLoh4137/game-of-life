@@ -315,7 +315,7 @@ export function useUniverse(
 
             dispatch({ type: ACTIONS.LIVE_SET, liveSet: newLiveSet });
             setGeneration(generation => generation + 1);
-        }, 1000);
+        }, 500);
 
         return () => clearInterval(interval);
     }, [isPaused, state.liveSet, numRow, numCol]);

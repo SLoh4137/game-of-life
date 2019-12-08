@@ -20,8 +20,7 @@ const boardStyle = {
         width: props => props.cellSize,
         height: props => props.cellSize,
         margin: props => props.cellSpacing,
-        borderStyle: "dotted",
-        borderColor: "black",
+        borderRadius: "5px",
     },
     aliveCell: {
         backgroundColor: props => props.aliveColor,

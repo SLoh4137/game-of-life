@@ -54,14 +54,14 @@ function Menu(props: Props) {
             >
                 <h3 align="center">Generation: {generation}</h3>
                 <GridContainer justify="center">
-                    <GridItem xs={12} sm={6}>
+                    <GridItem xs={12} sm={6} container justify="center">
                         <UniverseControls
                             optionsState={optionsState}
                             optionsDispatch={optionsDispatch}
                             universeDispatch={universeDispatch}
                         />
                     </GridItem>
-                    <GridItem xs={12} sm={6}>
+                    <GridItem xs={12} sm={6} container justify="center">
                         <BoardCustomization
                             optionsState={optionsState}
                             optionsDispatch={optionsDispatch}

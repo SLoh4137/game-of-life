@@ -78,11 +78,11 @@ function reducer(state: State, action) {
 function init() {
     return {
         isPaused: false,
-        cellSize: 50,
+        cellSize: 40,
         cellSpacing: 0,
         initialSpawnRate: 0.3,
-        aliveColor: "#000000",
-        deadColor: "#ffffff",
+        aliveColor: "#00ff80",
+        deadColor: "#0080c0",
     };
 }
 
