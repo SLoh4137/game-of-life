@@ -3,7 +3,7 @@
  */
 import React from "react";
 
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 
 import useDimensions from "hooks/useDimensions.jsx";
 import { useOptions } from "hooks/useOptions.jsx";

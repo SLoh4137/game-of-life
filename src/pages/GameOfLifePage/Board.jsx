@@ -4,7 +4,7 @@
 import React from "react";
 
 import type { UniverseType } from "types/typeExports";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Cell from "./Cell";
