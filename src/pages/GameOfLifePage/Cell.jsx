@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React from "react";
+import React, { useMemo } from "react";
 import classNames from "classnames";
 
 import { ACTIONS } from "hooks/useUniverse.jsx";
@@ -16,14 +16,20 @@ type PropType = {
     universeDispatch: Object,
 };
 
+function getClassName(state, classes) {
+    if (state === CELL_TYPES.ALIVE) {
+        return classNames(classes.aliveCell, classes.cell);
+    } else {
+        return classNames(classes.deadCell, classes.cell);
+    }
+}
+
 function Cell(props: PropType) {
     const { classes, row, col, state, universeDispatch } = props;
-    let className = "";
-    if (classes !== undefined) {
-        className =
-            state === CELL_TYPES.ALIVE ? classes.aliveCell : classes.deadCell;
-        className = classNames(className, classes.cell);
-    }
+    const className = useMemo(() => getClassName(state, classes), [
+        state,
+        classes,
+    ]);
 
     return (
         <button
@@ -35,7 +41,7 @@ function Cell(props: PropType) {
                     col: col,
                 })
             }
-        ></button>
+        />
     );
 }
 
