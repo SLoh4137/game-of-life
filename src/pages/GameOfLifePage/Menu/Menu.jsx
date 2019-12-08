@@ -40,13 +40,12 @@ function Menu(props: Props) {
 
     return (
         <>
-            <Fab
-                className={className}
-                size="small"
-                onClick={toggleDrawer(true)}
-            >
-                <MenuIcon />
-            </Fab>
+            <div className={className}>
+                <Fab size="small" onClick={toggleDrawer(true)}>
+                    <MenuIcon />
+                </Fab>
+            </div>
+
             <SwipeableDrawer
                 anchor="bottom"
                 open={isOpen}

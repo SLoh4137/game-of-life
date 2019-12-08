@@ -88,6 +88,7 @@ function UniverseControls(props: Props) {
                     <GridItem xs={6}>
                         <Button
                             fullWidth
+                            variant="filled"
                             onClick={() => {
                                 universeDispatch({
                                     type: UNIVERSE_ACTIONS.RESET,
@@ -100,6 +101,7 @@ function UniverseControls(props: Props) {
                     <GridItem xs={6}>
                         <Button
                             fullWidth
+                            variant="filled"
                             onClick={() => {
                                 universeDispatch({
                                     type: UNIVERSE_ACTIONS.CLEAR,

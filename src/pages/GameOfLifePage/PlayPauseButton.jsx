@@ -15,13 +15,14 @@ type Props = {
 function PlayPauseButton(props: Props) {
     const { className, isPaused, dispatch } = props;
     return (
-        <Fab
-            className={className}
-            size="small"
-            onClick={() => dispatch({type: ACTIONS.PLAYPAUSE})}
-        >
-            {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
-        </Fab>
+        <div className={className}>
+            <Fab
+                size="small"
+                onClick={() => dispatch({ type: ACTIONS.PLAYPAUSE })}
+            >
+                {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
+            </Fab>
+        </div>
     );
 }
 
